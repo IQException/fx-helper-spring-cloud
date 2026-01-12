@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: fx-helper-agg
+  profiles:
+    active: dev
+
+  main:
+    allow-bean-definition-overriding: true
+
+  jackson:
+    default-property-inclusion: NON_NULL
+
+  cloud:
+    nacos:
+      config:
+        import-check:
+          enabled: false
+      discovery:
+        server-addr: ${NACOS_HOST:localhost}:8848
+
+    loadbalancer:
+      nacos:
+        enabled: true
+      enabled: true
+    compatibility-verifier:
+      enabled: false
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+
+management:
+  otlp:
+    metrics:
+      export:
+        step: 2s
+        url: http://${PROMETHEUS_HOST:localhost}:9090/api/v1/otlp/v1/metrics
+  zipkin:
+    tracing:
+      endpoint: http://${TEMPO_HOST:localhost}:4318/v1/traces
+      encoding: PROTO3
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      instance: ${HOST_IP}
+
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true

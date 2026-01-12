@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: fx-helper-account
+  profiles:
+    active: dev
+
+  main:
+    allow-bean-definition-overriding: true
+
+  jackson:
+    default-property-inclusion: NON_NULL
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    nacos:
+      discovery:
+        server-addr: ${NACOS_HOST:localhost}:8848
+      config:
+        server-addr: ${NACOS_HOST:localhost}:8848
+    loadbalancer:
+      nacos:
+        enabled: true
+      enabled: true
+  config:
+    import:
+      - nacos:wx-config.json?group=fx-helper-common&refreshEnabled=true
+
+  sql:
+    init:
+      mode: always
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+
+management:
+  otlp:
+    metrics:
+      export:
+        step: 2s
+        url: http://${PROMETHEUS_HOST:localhost}:9090/api/v1/otlp/v1/metrics
+  zipkin:
+    tracing:
+      endpoint: http://${TEMPO_HOST:localhost}:4318/v1/traces
+      encoding: PROTO3
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      instance: ${HOST_IP}
+
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+rocketmq:
+
+  name-server: ${RMQ_HOST:localhost}:9876 # FIXME change to proxy addr
+  producer:
+    group: fx-helper-account-group
+    retry-next-server: true

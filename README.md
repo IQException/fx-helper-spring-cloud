@@ -132,3 +132,25 @@ https://github.com/user-attachments/assets/aa9367c8-7d66-4e2b-9841-1de5f2bd446e
 - client/api
     - 简单起见，将所有服务放在一个项目中（一般企业应用中，应当每个服务一个项目，每个项目都有很多模块，比如api/client、web、job等）;也将所有api/client放到一个一起，方便构建和理解。
 
+
+### 可观测性
+
+*Dashboard*
+
+![Dashboard](doc/Dashboard.png)
+![Basic](doc/Basic.png)
+![Jvm](doc/Jvm.png)
+![Log](doc/Log.png)
+
+*Logging*
+
+![Logging](doc/Logging.png)
+![Logging2](doc/Logging2.png)
+![Logging3](doc/Logging3.png)
+
+*Tracing*
+
+![Tracing](doc/Tracing.png)
+![Tracing2](doc/Tracing2.png)
+
+
